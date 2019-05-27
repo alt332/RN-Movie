@@ -5,10 +5,13 @@ import {
   Text,
   FlatList,
   RefreshControl,
-  Image
+  Image,
+  TouchableOpacity
 } from "react-native";
 
-export default (MovieList = () => {
+import { Transition } from "react-navigation-fluid-transitions";
+
+export default ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -75,17 +78,17 @@ export default (MovieList = () => {
         data={data}
         keyExtractor={item => `${item.id}`}
         renderItem={({ item }) => (
-          <View
-            style={{
-              flexDirection: "row",
-              borderBottomColor: "rgb(28, 34, 48)",
-              borderBottomWidth: 1,
-              paddingVertical: 20
-            }}
+          <TouchableOpacity
+            style={styles.movieItem}
+            onPress={() =>
+              navigation.navigate("MovieDetails", {
+                movie: item
+              })
+            }
           >
             <Image
               style={styles.coverImage}
-              source={{ uri: item.large_cover_image, cache: "force-cache" }}
+              source={{ uri: item.medium_cover_image, cache: "force-cache" }}
             />
 
             <View style={styles.infoContainer}>
@@ -95,30 +98,36 @@ export default (MovieList = () => {
                 <Text style={styles.ratingText}>IMDB - {item.rating}</Text>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         )}
       />
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgb(23, 28, 40)",
-    paddingHorizontal: 20
+    backgroundColor: "rgb(23, 28, 40)"
   },
   coverImage: {
     width: 80,
     height: 120,
     borderRadius: 4
   },
+  movieItem: {
+    flexDirection: "row",
+    borderBottomColor: "rgb(28, 34, 48)",
+    borderBottomWidth: 1,
+    paddingVertical: 20,
+    paddingHorizontal: 20
+  },
   infoContainer: {
     flexShrink: 1,
     marginLeft: 20
   },
   titleText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#FFFFFF",
     textTransform: "uppercase",
