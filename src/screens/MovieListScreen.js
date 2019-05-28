@@ -9,7 +9,7 @@ import {
   TouchableOpacity
 } from "react-native";
 
-import { Transition } from "react-navigation-fluid-transitions";
+import { SharedElement } from "react-native-motion";
 
 export default ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -86,10 +86,12 @@ export default ({ navigation }) => {
               })
             }
           >
-            <Image
-              style={styles.coverImage}
-              source={{ uri: item.medium_cover_image, cache: "force-cache" }}
-            />
+            <SharedElement id={`cover_image_${item.id}`}>
+              <Image
+                style={styles.coverImage}
+                source={{ uri: item.medium_cover_image, cache: "force-cache" }}
+              />
+            </SharedElement>
 
             <View style={styles.infoContainer}>
               <Text style={styles.titleText}>{item.title_long}</Text>

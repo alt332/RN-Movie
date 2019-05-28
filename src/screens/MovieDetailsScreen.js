@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+
+import { SharedElement } from "react-native-motion";
 
 export default ({ navigation }) => {
   const [movie, setMovie] = useState();
@@ -11,10 +13,12 @@ export default ({ navigation }) => {
   return movie ? (
     <View style={styles.container}>
       <View style={{ flexDirection: "row" }}>
-        <Image
-          style={styles.coverImage}
-          source={{ uri: movie.medium_cover_image, cache: "force-cache" }}
-        />
+        <SharedElement sourceId={`cover_image_${movie.id}`}>
+          <Image
+            style={styles.coverImage}
+            source={{ uri: movie.medium_cover_image, cache: "force-cache" }}
+          />
+        </SharedElement>
 
         <View style={{ flexDirection: "column", flex: 1, flexWrap: "wrap" }}>
           <Text style={styles.titleText}>{movie.title_english}</Text>
@@ -24,10 +28,12 @@ export default ({ navigation }) => {
         </View>
       </View>
 
-      <Text style={styles.synopsisText}>
-        {"\t"}
-        {movie.synopsis}
-      </Text>
+      <ScrollView>
+        <Text style={styles.synopsisText}>
+          {"\t"}
+          {movie.synopsis}
+        </Text>
+      </ScrollView>
     </View>
   ) : null;
 };
@@ -55,6 +61,7 @@ const styles = StyleSheet.create({
   },
   synopsisText: {
     marginTop: 20,
-    color: "#FFFFFF"
+    color: "#FFFFFF",
+    lineHeight: 24
   }
 });
