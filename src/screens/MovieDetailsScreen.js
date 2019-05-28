@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 
-import { SharedElement } from "react-native-motion";
-
 export default ({ navigation }) => {
   const [movie, setMovie] = useState();
 
@@ -13,12 +11,10 @@ export default ({ navigation }) => {
   return movie ? (
     <View style={styles.container}>
       <View style={{ flexDirection: "row" }}>
-        <SharedElement sourceId={`cover_image_${movie.id}`}>
-          <Image
-            style={styles.coverImage}
-            source={{ uri: movie.medium_cover_image, cache: "force-cache" }}
-          />
-        </SharedElement>
+        <Image
+          style={styles.coverImage}
+          source={{ uri: movie.medium_cover_image, cache: "force-cache" }}
+        />
 
         <View style={{ flexDirection: "column", flex: 1, flexWrap: "wrap" }}>
           <Text style={styles.titleText}>{movie.title_english}</Text>

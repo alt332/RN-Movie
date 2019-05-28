@@ -9,8 +9,6 @@ import {
   TouchableOpacity
 } from "react-native";
 
-import { SharedElement } from "react-native-motion";
-
 export default ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -86,12 +84,10 @@ export default ({ navigation }) => {
               })
             }
           >
-            <SharedElement id={`cover_image_${item.id}`}>
-              <Image
-                style={styles.coverImage}
-                source={{ uri: item.medium_cover_image, cache: "force-cache" }}
-              />
-            </SharedElement>
+            <Image
+              style={styles.coverImage}
+              source={{ uri: item.medium_cover_image, cache: "force-cache" }}
+            />
 
             <View style={styles.infoContainer}>
               <Text style={styles.titleText}>{item.title_long}</Text>
